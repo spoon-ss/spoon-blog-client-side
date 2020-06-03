@@ -1,5 +1,5 @@
 import React from 'react'
-import {Grid, List, ListItem, ListItemText, withStyles, Box, Collapse} from '@material-ui/core'
+import {Grid, List, ListItem, ListItemText, withStyles, Box, Collapse, Typography, Card} from '@material-ui/core'
 import {styled} from '@material-ui/core/styles'
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 
@@ -7,12 +7,13 @@ const styles = (theme) => ({
     root: {
         backgroundColor: theme.palette.background.paper,
     },
-    columnBar: {
-        position: 'fixed',
-        left: 0,
+
+    columnBar:{
+        padding: theme.spacing(4),
     },
-
-
+    paper:{
+        marginTop: theme.spacing(1),
+    }
 })
 
 class SideBar extends React.Component {
@@ -39,16 +40,19 @@ class SideBar extends React.Component {
         const {cateData} = this.props
         const {collapseBool} = this.state
         return (
-            <Grid container direction={'column'} className={classes.columnBar}>
-                <Grid item xs={2}>
-                    <List className={classes.root}>
-                        {cateData.map((item, i) => {
-                            return (
-                                <FirstMenuItem handleClick={this.handleClick} isOn={collapseBool[i]}
-                                               nextLevelData={item.nextLevelData} index={i} title={item.title}/>
-                            )
-                        })}
-                    </List>
+
+            <Grid container xs={11} sm={3} direction={'column'} alignItems={'initial'} className={classes.columnBar}>
+                <Grid item >
+                    <Card>
+                        <List className={classes.root}>
+                            {cateData.map((item, i) => {
+                                return (
+                                    <FirstMenuItem handleClick={this.handleClick} isOn={collapseBool[i]}
+                                                   nextLevelData={item.nextLevelData} index={i} title={item.title}/>
+                                )
+                            })}
+                        </List>
+                    </Card>
                 </Grid>
             </Grid>
         );
@@ -68,7 +72,7 @@ class FirstMenuItem extends React.Component {
         return (
             <Box>
                 <ListItem button onClick={(event) => handleClick(index)}>
-                    <ListItemText primary={title}/>
+                    <Typography color={"textPrimary"} variant={"subtitle1"}>{title}</Typography>
                 </ListItem>
                 <SecondMenuItem menuData={nextLevelData} isOn={isOn}/>
             </Box>
@@ -78,7 +82,8 @@ class FirstMenuItem extends React.Component {
 
 const theme = createMuiTheme()
 const NestedListItem = styled(ListItem)({
-    paddingLeft: theme.spacing(4)
+    paddingLeft: theme.spacing(4),
+    flex: "1, 1, auto"
 })
 
 class SecondMenuItem extends React.Component {
@@ -95,7 +100,7 @@ class SecondMenuItem extends React.Component {
                     {menuData.map((subItem, j) => {
                         return (
                             <NestedListItem key={j} button>
-                                <ListItemText secondary={subItem}/>
+                                <Typography color={"textSecondary"} variant={"subtitle2"}>{subItem}</Typography>
                             </NestedListItem>
                         )
                     })}

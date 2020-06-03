@@ -1,9 +1,12 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import 'fontsource-roboto';
 import Header from "./layout/header/Header";
-import CustomizedMenus from './layout/header/Dropdown'
-import SideBar from "./layout/sideBar/SideBar";
+import SideBar from "./articleComponent/SideBar";
+import Main from "./layout/Main"
+import Content from './articleComponent/Content'
+import FluidImage from "./layout/FluidImage";
+import Footer from './layout/Footer'
 
 const categoryData=[
     {
@@ -15,11 +18,33 @@ const categoryData=[
         nextLevelData: ["Java", "Spring", "Distributed System"]
     }
 ]
+const contentData=[
+    {
+        title: "Introduction to React",
+        introduction: "This article teach the basic concept about React."
+    },
+    {
+        title: "Introduction to React",
+        introduction: "This article teach the basic concept about React."
+    },
+    {
+        title: "Introduction to React",
+        introduction: "This article teach the basic concept about React."
+    },
+    {
+        title: "Introduction to React",
+        introduction: "This article teach the basic concept about React."
+    },
+]
 function App() {
   return (
     <div className="App">
         <Header/>
-        <SideBar cateData={categoryData}/>
+        <Main>
+            <FluidImage/>
+            <Content cateData={categoryData} contentData={contentData}/>
+        </Main>
+        <Footer/>
     </div>
   );
 }

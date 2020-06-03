@@ -2,7 +2,7 @@ import React from 'react'
 import CustomizedMenus from "./Dropdown";
 
 import {Avatar, AppBar, Toolbar, Button} from '@material-ui/core';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import {makeStyles, withStyles} from '@material-ui/core/styles';
 import HomeIcon from '@material-ui/icons/Home';
 import CategoryIcon from '@material-ui/icons/Category';
 import Typography from '@material-ui/core/Typography';
@@ -10,38 +10,53 @@ import ArchiveIcon from '@material-ui/icons/Archive';
 import PersonIcon from '@material-ui/icons/Person';
 import SearchIcon from '@material-ui/icons/Search';
 import MenuIcon from '@material-ui/icons/Menu';
-const styles = theme => ({
+import {breakpoints} from "@material-ui/system";
 
-    avatar:{
+const styles = theme => ({
+    toolbarHeight:{
+        height: '100px'
+    },
+    appBar: {
+        height: '100px',
+        display: 'flex',
+        wrap: 'unwrap',
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingLeft: theme.spacing(2),
+        paddingRight: theme.spacing(2)
+
+    },
+    avatar: {
         marginRight: theme.spacing(2)
     },
-    title:{
+    title: {
         marginRight: theme.spacing(2),
         flexGrow: 0,
     },
-    subtitle:{
+    subtitle: {
+        lineHeight: '1.5',
         marginTop: theme.spacing(1),
         marginRight: theme.spacing(2),
         flexGrow: 0,
     },
-    icon:{
-     fontSize: "22px"
+    icon: {
+        fontSize: "22px"
     },
-    button:{
-        [theme.breakpoints.down('sm')]:{
+    button: {
+        [theme.breakpoints.down('sm')]: {
             display: "none"
         },
-        marginRight:theme.spacing(1),
+        marginRight: theme.spacing(1),
         textTransform: "none"
     },
-    hideButton:{
-        [theme.breakpoints.down('sm')]:{
+    hideButton: {
+        [theme.breakpoints.down('sm')]: {
             display: "flex"
         },
         display: 'none',
         backgroundColor: 'transparent'
     },
-    grow:{
+    grow: {
         flexGrow: 1,
     },
 
@@ -56,39 +71,40 @@ class Header extends React.Component {
         const {classes} = this.props
 
         return (
-            <AppBar position={"fixed"} color={"transparent"} >
-                <Toolbar variant={"regular"} >
-                    <Avatar className={classes.avatar} size="small" src={"https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"}/>
-                    <Typography variant="h5" className={classes.title}>Spoon</Typography>
-                    <Typography variant={'subtitle2'} className={classes.subtitle}>My personal blog</Typography>
+            <div className={classes.toolbarHeight}>
+                <AppBar position={'relative'} color={"white"} className={classes.appBar}>
+                        <Avatar className={classes.avatar} size="small"
+                                src={"https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"}/>
+                        <Typography variant="h4" className={classes.title}>Spoon</Typography>
+                        <Typography variant={'overline'} className={classes.subtitle}>My personal blog</Typography>
 
-                    {/* fill the blank in the center */}
-                    <div className={classes.grow} > </div>
+                        {/* fill the blank in the center */}
+                        <div className={classes.grow}></div>
 
-                    <Button color={'inherit'} className={classes.button}>
-                        <HomeIcon className={classes.icon} color="action" />
-                        <Typography>Home</Typography>
-                    </Button>
-                    <Button color={'inherit'} className={classes.button}>
-                        <CategoryIcon className={classes.icon} color="action" />
-                        <Typography>{"Category"}</Typography>
-                    </Button>
-                    <Button color={'inherit'} className={classes.button}>
-                        <ArchiveIcon className={classes.icon} color="action"  />
-                        <Typography>Archive</Typography>
-                    </Button>
-                    <Button color={'inherit'} className={classes.button}>
-                        <PersonIcon className={classes.icon} color="action"  />
-                        <Typography>About me</Typography>
-                    </Button>
-                    <Button color={'inherit'} className={classes.button}>
-                        <SearchIcon/>
-                    </Button>
-                    <div className={classes.hideButton}>
-                        <CustomizedMenus/>
-                    </div>
-                </Toolbar>
-            </AppBar>
+                        <Button color={'inherit'} className={classes.button}>
+                            <HomeIcon className={classes.icon} color="action"/>
+                            <Typography variant={'button'}>Home</Typography>
+                        </Button>
+                        <Button color={'inherit'} className={classes.button}>
+                            <CategoryIcon className={classes.icon} color="action"/>
+                            <Typography variant={'button'}>{"Category"}</Typography>
+                        </Button>
+                        <Button color={'inherit'} className={classes.button}>
+                            <ArchiveIcon className={classes.icon} color="action"/>
+                            <Typography variant={'button'}>Archive</Typography>
+                        </Button>
+                        <Button color={'inherit'} className={classes.button}>
+                            <PersonIcon className={classes.icon} color="action"/>
+                            <Typography variant={'button'}>About me</Typography>
+                        </Button>
+                        <Button color={'inherit'} className={classes.button}>
+                            <SearchIcon/>
+                        </Button>
+                        <div className={classes.hideButton}>
+                            <CustomizedMenus/>
+                        </div>
+                </AppBar>
+            </div>
         )
     }
 
