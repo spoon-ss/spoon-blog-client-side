@@ -1,0 +1,17 @@
+.is-collapsed{
+    display: none;
+}
+.is-active-link{
+    color: black;
+    font-weight: bold;
+}
+.toc-link{
+    text-decoration: none;
+    font-size: 0.8rem;
+}
+.toc-list{
+    list-style-type: none;
+}
+a{
+    color: black;
+}

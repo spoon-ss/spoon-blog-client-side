@@ -29,36 +29,35 @@ class Footer extends React.Component {
         return (
             <footer className={classes.footer}>
                 <Card elevation={2}>
-                    <Grid container wrap={'wrap'} className={classes.root}>
-                        <Grid item xs={12} sm={6} md={6} lg={4}>
-                            <Typography align={'left'} variant={"overline"} color={'textPrimary'} component={'div'}
-                                        className={classes.subTitle}>
-                                About me
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={12} sm={6} md={6} lg={4}>
-                            <Typography align={'left'} variant={"overline"} color={'textPrimary'} component={'div'}
-                                        className={classes.subTitle}>
-                                Recent blogs
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={12} sm={6} md={6} lg={4}>
-                            <Typography align={'left'} variant={"overline"} color={'textPrimary'} component={'div'}
-                                        className={classes.subTitle}>
-                                Follow me
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Typography variant={'cation'} component={'div'}>
-                                This site is built by @spoon
-                            </Typography>
-                            <Typography variant={'cation'} component={'div'}>
-                                This site has <b>1000</b> visitors
-                            </Typography>
-                        </Grid>
-
+                    <Grid container wrap={'unwrap'} className={classes.root}>
+                            <Grid item xs={12} sm={12} md={4} lg={4}>
+                                <Typography align={'left'} variant={"overline"} color={'textPrimary'} component={'div'}
+                                            className={classes.subTitle}>
+                                    About me
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={12} md={4} lg={4}>
+                                <Typography align={'left'} variant={"overline"} color={'textPrimary'} component={'div'}
+                                            className={classes.subTitle}>
+                                    Recent blogs
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={12} md={4} lg={4}>
+                                <Typography align={'left'} variant={"overline"} color={'textPrimary'} component={'div'}
+                                            className={classes.subTitle}>
+                                    Follow me
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Typography variant={'cation'} component={'div'}>
+                                    This site is built by @spoon
+                                </Typography>
+                                <Typography variant={'cation'} component={'div'}>
+                                    This site has <b>1000</b> visitors
+                                </Typography>
+                            </Grid>
                     </Grid>
-                </Card>
+            </Card>
             </footer>
         );
     }
