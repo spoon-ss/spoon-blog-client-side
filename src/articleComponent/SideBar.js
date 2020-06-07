@@ -31,6 +31,7 @@ false,
 chosen=[
 [false...],[true...],[]
 ]
+allCategoryChosen = true
 
  */
 
@@ -42,7 +43,7 @@ class SideBar extends React.Component {
 
     render() {
         const {classes} = this.props
-        const {cateData, isOn, chosen} = this.props
+        const {cateData, isOn, chosen, allCategoryChosen} = this.props
         const {onCollapsedClick, onChosenClick} = this.props
 
         return (
@@ -50,6 +51,10 @@ class SideBar extends React.Component {
                 <Grid item >
                     <Card>
                         <List className={classes.root}>
+                            <ListItem style={ allCategoryChosen ? {backgroundColor: 'rgba(0, 0, 0, 0.1)'} : {}} button onClick={(event) => onChosenClick(-1, -1)}>
+                                <Typography  color={"textPrimary"} variant={"subtitle1"}>All</Typography>
+                                <Grid item style={{flexGrow: 1}}/>
+                            </ListItem>
                             {cateData.map((item, i) => {
                                 return (
                                     <FirstMenuItem key={i} classes={classes} handleCollapsedClick={onCollapsedClick} handleChosenClick={onChosenClick}

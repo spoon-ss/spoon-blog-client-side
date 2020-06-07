@@ -50,51 +50,62 @@ class Content extends React.Component {
             isOn: categoryData.map((item) => (false)),
             chosen: categoryData.map((item,) => {
                 return item.nextLevelData.map((subItem, j) => (false));
-            })
+            }),
+            allCategoryChosen: true
 
         }
         this.handleChosenClick = this.handleChosenClick.bind(this);
         this.handleCollapsedClick = this.handleCollapsedClick.bind(this);
     }
 
-    handleCollapsedClick(id){
+    handleCollapsedClick(id) {
         this.setState({
-            isOn: this.state.isOn.map((item, i)=>{
-                if(id === i){
+            isOn: this.state.isOn.map((item, i) => {
+                if (id === i) {
                     return !item
                 }
                 return item
             })
         })
     }
-    handleChosenClick(firstLevel, secondLevel){
 
-        this.setState({
+    handleChosenClick(firstLevel, secondLevel) {
 
-            chosen: this.state.chosen.map((item, i)=>{
-                let result = item.map((subItem)=>(false));
-                if(i === firstLevel){
-                    result[secondLevel] = true;
-                }
-                return result;
+        if (firstLevel !== -1 && secondLevel !== -1) {
+            this.setState({
+                chosen: this.state.chosen.map((item, i) => {
+                    let result = item.map((subItem) => (false));
+                    if (i === firstLevel) {
+                        result[secondLevel] = true;
+                    }
+                    return result;
+                }),
+                allCategoryChosen: false
             })
-        })
+        } else {
+            this.setState({
+                chosen: this.state.chosen.map((item, i) => {
+                    return item.map((subItem) => (false))
+                }),
+                allCategoryChosen: true,
+            }
+        )}
     }
 
 
     render() {
         const {classes} = this.props;
-        const {isOn, chosen} = this.state
+        const {isOn, chosen, allCategoryChosen} = this.state
         return (
             <Grid container className={classes.root} justify={"space-around"} spacing={4}>
                 <Grid item xs={10} sm={2}>
-                    <SideBar cateData={categoryData} isOn={isOn} chosen={chosen}
+                    <SideBar cateData={categoryData} isOn={isOn} chosen={chosen} allCategoryChosen={allCategoryChosen}
                              onCollapsedClick={this.handleCollapsedClick} onChosenClick={this.handleChosenClick}/>
                 </Grid>
                 <Grid item xs={10} sm={9} className={classes.articleRoot}>
                     <Grid wrap={'wrap'} container spacing={2} justify={'center'}>
                         {contentData.map((item, i) => (
-                            <Grid key={i} item xs={12} sm={6} md={4} lg={3} >
+                            <Grid key={i} item xs={12} sm={6} md={4} lg={3}>
                                 <ArticleCard title={item.title} introduction={item.introduction}/>
                             </Grid>
                         ))}

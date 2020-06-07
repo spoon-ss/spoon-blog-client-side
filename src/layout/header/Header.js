@@ -103,7 +103,7 @@ class Header extends React.Component {
                             <SearchIcon/>
                         </Button>
                         <div className={classes.hideButton}>
-                            <CustomizedMenus/>
+                            <CustomizedMenus />
                         </div>
                 </AppBar>
             </div>
