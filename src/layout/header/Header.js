@@ -19,7 +19,9 @@ const styles = theme => ({
     appBar: {
         height: '100px',
         display: 'flex',
-        wrap: 'unwrap',
+        flexWrap: 'nowrap',
+        backgroundColor: 'white',
+        color:'black',
         flexDirection: 'row',
         alignItems: 'center',
         paddingLeft: theme.spacing(2),
@@ -72,7 +74,7 @@ class Header extends React.Component {
 
         return (
             <div className={classes.toolbarHeight}>
-                <AppBar position={'relative'} color={"white"} className={classes.appBar}>
+                <AppBar position={'relative'} className={classes.appBar}>
                         <Avatar className={classes.avatar} size="small"
                                 src={"https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"}/>
                         <Typography variant="h4" className={classes.title}>Spoon</Typography>

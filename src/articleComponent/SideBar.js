@@ -2,6 +2,9 @@ import React from 'react'
 import {Grid, List, ListItem, ListItemText, withStyles, Box, Collapse, Typography, Card} from '@material-ui/core'
 import {styled} from '@material-ui/core/styles'
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import {borderBottom} from "@material-ui/system";
 
 const styles = (theme) => ({
     root: {
@@ -9,46 +12,48 @@ const styles = (theme) => ({
     },
 
     columnBar:{
-        padding: theme.spacing(4),
+        marginTop: theme.spacing(4)
     },
     paper:{
         marginTop: theme.spacing(1),
+    },
+    isChosen: {
+        backgroundColor: 'grey',
     }
+
 })
+/*
+isOn=[
+true,
+false,
+...
+]
+chosen=[
+[false...],[true...],[]
+]
+
+ */
 
 class SideBar extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            collapseBool: props.cateData.reduce((result, item, i) => {
-                result[i] = false;
-                return result;
-            }, {}),
-        }
-        this.handleClick = this.handleClick.bind(this)
-    }
-
-    handleClick(id, event) {
-        let collapseBool = {...this.state.collapseBool}
-        collapseBool[id] = !collapseBool[id]
-        this.setState({collapseBool});
 
     }
 
     render() {
         const {classes} = this.props
-        const {cateData} = this.props
-        const {collapseBool} = this.state
-        return (
+        const {cateData, isOn, chosen} = this.props
+        const {onCollapsedClick, onChosenClick} = this.props
 
-            <Grid container xs={11} sm={3} direction={'column'} alignItems={'initial'} className={classes.columnBar}>
+        return (
+            <Grid container direction={'column'}  className={classes.columnBar}>
                 <Grid item >
                     <Card>
                         <List className={classes.root}>
                             {cateData.map((item, i) => {
                                 return (
-                                    <FirstMenuItem handleClick={this.handleClick} isOn={collapseBool[i]}
-                                                   nextLevelData={item.nextLevelData} index={i} title={item.title}/>
+                                    <FirstMenuItem key={i} classes={classes} handleCollapsedClick={onCollapsedClick} handleChosenClick={onChosenClick}
+                                                   isOn={isOn[i]} nextLevelData={item.nextLevelData} chosen={chosen[i]} index={i} title={item.title}/>
                                 )
                             })}
                         </List>
@@ -65,42 +70,48 @@ class FirstMenuItem extends React.Component {
     }
 
     render() {
-        const {handleClick} = this.props
-        const {isOn} = this.props
+        const {handleCollapsedClick, handleChosenClick} = this.props
+        const {isOn, chosen} = this.props
         const {nextLevelData} = this.props
         const {title, index} = this.props
+        const borderStyle = {
+
+        }
         return (
-            <Box>
-                <ListItem button onClick={(event) => handleClick(index)}>
-                    <Typography color={"textPrimary"} variant={"subtitle1"}>{title}</Typography>
-                </ListItem>
-                <SecondMenuItem menuData={nextLevelData} isOn={isOn}/>
-            </Box>
+            <div key={index}>
+                    <ListItem button onClick={(event) => handleCollapsedClick(index)}>
+                        <Typography color={"textPrimary"} variant={"subtitle1"}>{title}</Typography>
+                        <Grid item style={{flexGrow: 1}}/>
+                        {isOn ? <ExpandLess /> : <ExpandMore />}
+                    </ListItem>
+                <SecondMenu classes={this.props} handleChosenClick={(id)=>(handleChosenClick(index, id))} menuData={nextLevelData} isOn={isOn} chosen={chosen}/>
+            </div>
         )
     }
 }
-
 const theme = createMuiTheme()
 const NestedListItem = styled(ListItem)({
     paddingLeft: theme.spacing(4),
     flex: "1, 1, auto"
 })
 
-class SecondMenuItem extends React.Component {
+class SecondMenu extends React.Component {
     constructor(props) {
         super(props);
     }
 
     render() {
-        const {isOn} = this.props
+        const {classes} = this.props
+        const {handleChosenClick} = this.props
+        const {isOn, chosen} = this.props
         const {menuData} = this.props
         return (
             <Collapse in={isOn} timeout={"auto"} unmountOnExit>
                 <List>
                     {menuData.map((subItem, j) => {
                         return (
-                            <NestedListItem key={j} button>
-                                <Typography color={"textSecondary"} variant={"subtitle2"}>{subItem}</Typography>
+                            <NestedListItem  style={chosen[j] ? {backgroundColor: 'rgba(0, 0, 0, 0.1)'} : {}} key={j} button onClick={()=>(handleChosenClick(j))}>
+                                <Typography  color={"textSecondary"} variant={"subtitle2"}>{subItem}</Typography>
                             </NestedListItem>
                         )
                     })}

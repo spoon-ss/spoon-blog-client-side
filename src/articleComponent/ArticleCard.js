@@ -7,58 +7,65 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import {Grid} from "@material-ui/core";
+import cardImg from '../assets/img/cardImg.jpg'
+import {withRouter} from "react-router";
 
 const theme = createMuiTheme();
 
 const styles = (theme) => ({
     root: {
         textAlign: 'initial',
+        minWidth: '250px',
     },
     media: {
-        height: 100,
+        minHeight: '150px',
     },
     title:{
         fontSize: '1rem'
     },
     introduction:{
         fontSize: '0.6rem'
+    },
+    cardContent:{
+        height: "100px",
+        overflow: "hidden"
     }
+
 })
 
 function ArticleCard(props) {
     const {classes} = props;
-    const {title, introduction} = props;
+    const {title, introduction, imgURL=`${cardImg}`, articleURL='/blog/1'} = props;
+    const {history} = props
 
     return (
-        <Grid item xs={10} sm={6} md={4} lg={3} justify={'center'} >
+        <div className={props.className}>
+
                 <Card className={classes.root}>
-                    <CardActionArea>
                         <CardMedia
                             className={classes.media}
-                            image="/static/images/cards/contemplative-reptile.jpg"
-                            title="Contemplative Reptile"
+                            image={`${imgURL}`}
                         />
-                        <CardContent>
+                        <CardContent className={classes.cardContent}>
                             <Typography className={classes.title} gutterBottom variant="h2" component="h2">
                                 {title}
                             </Typography>
-                            <Typography className={classes.introduction} font variant="body2" color="textSecondary" component="p">
+                            <Typography className={classes.introduction} variant="body2" color="textSecondary" component="p">
                                 {introduction}
                             </Typography>
                         </CardContent>
-                    </CardActionArea>
                     <CardActions>
-                        <Button size="small" color="primary">
-                            Share
-                        </Button>
-                        <Button size="small" color="primary">
-                            Learn More
+                        <Button style={{textTransform: 'none'}} size="small" color="primary" onClick={(e)=>{
+                            e.preventDefault();
+                            history.push(articleURL);
+                        }}>
+                            Read More
                         </Button>
                     </CardActions>
                 </Card>
-            </Grid>
+        </div>
     );
+
 }
 
-export default withStyles(styles)(ArticleCard)
+export default withStyles(styles)(withRouter(ArticleCard))

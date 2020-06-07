@@ -5,7 +5,7 @@ import {withStyles} from "@material-ui/core";
 const styles = (theme) => ({
     root: {
         minHeight: '200px',
-        background: 'white',
+        backgroundColor: 'white',
         color: '#7b7b7b',
         fontSize: '0.6rem',
     },
@@ -26,10 +26,11 @@ const styles = (theme) => ({
 class Footer extends React.Component {
     render() {
         const {classes} = this.props
+        const {visitCount = 0} = this.props
         return (
             <footer className={classes.footer}>
                 <Card elevation={2}>
-                    <Grid container wrap={'unwrap'} className={classes.root}>
+                    <Grid container wrap={'wrap'} className={classes.root}>
                             <Grid item xs={12} sm={12} md={4} lg={4}>
                                 <Typography align={'left'} variant={"overline"} color={'textPrimary'} component={'div'}
                                             className={classes.subTitle}>
@@ -49,11 +50,11 @@ class Footer extends React.Component {
                                 </Typography>
                             </Grid>
                             <Grid item xs={12}>
-                                <Typography variant={'cation'} component={'div'}>
+                                <Typography variant={'caption'} component={'div'}>
                                     This site is built by @spoon
                                 </Typography>
-                                <Typography variant={'cation'} component={'div'}>
-                                    This site has <b>1000</b> visitors
+                                <Typography variant={'caption'} component={'div'}>
+                                    This site has <b>{`${visitCount}`}</b> visitors
                                 </Typography>
                             </Grid>
                     </Grid>

@@ -8,6 +8,12 @@
 
 @media (max-width: 767px) {
     .markdown-body {
-        padding: 15px;
     }
+}
+
+
+.markdown-body img{
+    width: 75%;
+    margin: 0 auto 0 auto;
+    display: block;
 }
