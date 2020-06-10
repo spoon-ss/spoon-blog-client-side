@@ -1,19 +1,30 @@
 import React from 'react'
-import {Grid} from '@material-ui/core'
+import {connect} from 'react-redux'
+import {Grid, Card} from '@material-ui/core'
 import ArticleCard from "./ArticleCard";
 import {withStyles} from "@material-ui/core/styles";
-import SideBar from "./SideBar";
-
-const categoryData = [
+import {chooseCategory, pullCategory} from "../redux/actions";
+import CustomMenu from "./CustomMultiLevelMenu";
+const chosenTag = "Label of Item"
+const categoryData =[
     {
-        title: "Algorithm",
-        nextLevelData: ["BFS", "DFS", "LinkedList"]
+        icon: 'icon-class-name',
+        label: 'Label of Item',
+        to: '#a-link',
     },
     {
-        title: "Backend",
-        nextLevelData: ["Java", "Spring", "Distributed System"]
-    }
-]
+        icon: 'icon-class-name',
+        label: 'Second Item',
+        content: [
+            {
+                icon: 'icon-class-name',
+                label: 'Sub Menu of Second Item',
+                to: '#another-link',
+            },
+        ],
+    },
+];
+
 const contentData = [
     {
         title: "Introduction to React",
@@ -36,6 +47,9 @@ const styles = (theme) => ({
     articleRoot: {
         marginTop: theme.spacing(4)
     },
+    menu:{
+        marginTop: theme.spacing(4)
+    },
     root: {
         minHeight: '500px',
     }
@@ -44,63 +58,28 @@ const styles = (theme) => ({
 class Content extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            contentData: contentData,
-            isOn: categoryData.map((item) => (false)),
-            chosen: categoryData.map((item,) => {
-                return item.nextLevelData.map((subItem, j) => (false));
-            }),
-            allCategoryChosen: true
-
-        }
-        this.handleChosenClick = this.handleChosenClick.bind(this);
-        this.handleCollapsedClick = this.handleCollapsedClick.bind(this);
+        this.onMenuChosen = this.onMenuChosen.bind(this)
     }
 
-    handleCollapsedClick(id) {
-        this.setState({
-            isOn: this.state.isOn.map((item, i) => {
-                if (id === i) {
-                    return !item
-                }
-                return item
-            })
-        })
+    onMenuChosen(chosenTag){
+        const {dispatch} = this.props
+        dispatch(chooseCategory(chosenTag))
     }
 
-    handleChosenClick(firstLevel, secondLevel) {
-
-        if (firstLevel !== -1 && secondLevel !== -1) {
-            this.setState({
-                chosen: this.state.chosen.map((item, i) => {
-                    let result = item.map((subItem) => (false));
-                    if (i === firstLevel) {
-                        result[secondLevel] = true;
-                    }
-                    return result;
-                }),
-                allCategoryChosen: false
-            })
-        } else {
-            this.setState({
-                chosen: this.state.chosen.map((item, i) => {
-                    return item.map((subItem) => (false))
-                }),
-                allCategoryChosen: true,
-            }
-        )}
+    componentDidMount() {
+        const {dispatch} = this.props
+        dispatch(pullCategory())
     }
-
 
     render() {
+        const {contentData, categoryData, chosenTag} = this.props
         const {classes} = this.props;
-        const {isOn, chosen, allCategoryChosen} = this.state
         return (
             <Grid container className={classes.root} justify={"space-around"} spacing={4}>
                 <Grid item xs={10} sm={2}>
-                    <SideBar cateData={categoryData} isOn={isOn} chosen={chosen} allCategoryChosen={allCategoryChosen}
-                             onCollapsedClick={this.handleCollapsedClick} onChosenClick={this.handleChosenClick}/>
+                    <Card elevation={2} className={classes.menu}>
+                        <CustomMenu content ={categoryData} chosenTag={chosenTag} onTagChosen={this.onMenuChosen}/>
+                    </Card>
                 </Grid>
                 <Grid item xs={10} sm={9} className={classes.articleRoot}>
                     <Grid wrap={'wrap'} container spacing={2} justify={'center'}>
@@ -116,5 +95,15 @@ class Content extends React.Component {
         )
     }
 }
+function mapStateToProps(state) {
+    console.log(state)
+    return{
+        categoryData: categoryData,
+        contentData: contentData,
+        //get state from store
+        chosenTag: state.ui.chosenCategory
+    }
 
-export default withStyles(styles)(Content)
+}
+export default connect(mapStateToProps)(withStyles(styles)(Content))
+

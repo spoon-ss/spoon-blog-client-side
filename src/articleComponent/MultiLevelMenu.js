@@ -34,8 +34,10 @@ chosen=[
 allCategoryChosen = true
 
  */
-
-class SideBar extends React.Component {
+/*
+    Todo factor the component to self contain the level expand state.
+ */
+class MultiLevelMenu extends React.Component {
     constructor(props) {
         super(props);
 
@@ -89,10 +91,9 @@ class FirstMenuItem extends React.Component {
                         <Grid item style={{flexGrow: 1}}/>
                         {isOn ? <ExpandLess /> : <ExpandMore />}
                     </ListItem>
-                <SecondMenu classes={this.props} handleChosenClick={(id)=>(handleChosenClick(index, id))} menuData={nextLevelData} isOn={isOn} chosen={chosen}/>
+                <SecondMenu classes={this.props} handleChosenClick={(id, url)=>(handleChosenClick(index, id, url))} menuData={nextLevelData} isOn={isOn} chosen={chosen}/>
             </div>
-        )
-    }
+        )}
 }
 const theme = createMuiTheme()
 const NestedListItem = styled(ListItem)({
@@ -115,8 +116,8 @@ class SecondMenu extends React.Component {
                 <List>
                     {menuData.map((subItem, j) => {
                         return (
-                            <NestedListItem  style={chosen[j] ? {backgroundColor: 'rgba(0, 0, 0, 0.1)'} : {}} key={j} button onClick={()=>(handleChosenClick(j))}>
-                                <Typography  color={"textSecondary"} variant={"subtitle2"}>{subItem}</Typography>
+                            <NestedListItem  style={chosen[j] ? {backgroundColor: 'rgba(0, 0, 0, 0.1)'} : {}} key={j} button onClick={()=>(handleChosenClick(j,subItem.link))}>
+                                <Typography  color={"textSecondary"} variant={"subtitle2"}>{subItem.title}</Typography>
                             </NestedListItem>
                         )
                     })}
@@ -126,4 +127,4 @@ class SecondMenu extends React.Component {
     }
 }
 
-export default withStyles(styles)(SideBar)
+export default withStyles(styles)(MultiLevelMenu)
