@@ -2,15 +2,14 @@ import React from 'react'
 import CustomizedMenus from "./Dropdown";
 
 import {Avatar, AppBar, Toolbar, Button} from '@material-ui/core';
-import {makeStyles, withStyles} from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import HomeIcon from '@material-ui/icons/Home';
 import CategoryIcon from '@material-ui/icons/Category';
 import Typography from '@material-ui/core/Typography';
 import ArchiveIcon from '@material-ui/icons/Archive';
 import PersonIcon from '@material-ui/icons/Person';
 import SearchIcon from '@material-ui/icons/Search';
-import MenuIcon from '@material-ui/icons/Menu';
-import {breakpoints} from "@material-ui/system";
+import {withRouter, Link} from "react-router-dom";
 
 const styles = theme => ({
     toolbarHeight:{
@@ -71,8 +70,10 @@ class Header extends React.Component {
 
     render() {
         const {classes} = this.props
+        const {history} = this.props
 
         return (
+
             <div className={classes.toolbarHeight}>
                 <AppBar position={'relative'} className={classes.appBar}>
                         <Avatar className={classes.avatar} size="small"
@@ -83,13 +84,15 @@ class Header extends React.Component {
                         {/* fill the blank in the center */}
                         <div className={classes.grow}></div>
 
-                        <Button color={'inherit'} className={classes.button}>
+                        <Button color={'inherit'} onClick={()=>(history.push("/"))} className={classes.button}>
                             <HomeIcon className={classes.icon} color="action"/>
+                            <Link to={"/"}>
+                            </Link>
                             <Typography variant={'button'}>Home</Typography>
                         </Button>
                         <Button color={'inherit'} className={classes.button}>
                             <CategoryIcon className={classes.icon} color="action"/>
-                            <Typography variant={'button'}>{"Category"}</Typography>
+                            <Typography variant={'button'}>Category</Typography>
                         </Button>
                         <Button color={'inherit'} className={classes.button}>
                             <ArchiveIcon className={classes.icon} color="action"/>
@@ -112,4 +115,4 @@ class Header extends React.Component {
 
 }
 
-export default withStyles(styles)(Header);
+export default withStyles(styles)(withRouter(Header));

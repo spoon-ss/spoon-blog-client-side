@@ -19,6 +19,7 @@ const styles = (theme) => ({
     },
     media: {
         minHeight: '150px',
+        backgroundSize: '100%',
     },
     title:{
         fontSize: '1rem'

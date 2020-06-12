@@ -26,7 +26,7 @@ class ArticleRecommend extends React.Component {
                     </Typography>
                     <Grid container wrap={"nowrap"} className={classes.root} spacing={2}>
                         {[...Array(8)].map((item, i) => (
-                            <Grid item>
+                            <Grid item key={i}>
                                     <ArticleCard className={classes.flexItem} title={"Introduction to Spring MVC"}
                                                  introduction={"Test content Test content Test content Test content Test content Test content "}/>
                             </Grid>

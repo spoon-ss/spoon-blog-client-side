@@ -1,10 +1,15 @@
 import React from 'react'
-import {Grid, Paper, Slide} from "@material-ui/core";
+import { withRouter } from "react-router-dom";
+import {Grid, Paper} from "@material-ui/core";
 import {ArticleContentWrap, contentCSSClassName} from "./ArticleContent";
 import ArticleIndex from "./ArticleIndex";
 import {withStyles} from "@material-ui/core/styles";
-import ArticleCard from "../ArticleCard";
 import ArticleRecommend from "./ArticleRecommend";
+import {pullBlogById} from "../../redux/actions";
+import connect from "react-redux/lib/connect/connect";
+import * as tocbot from 'tocbot'
+
+
 
 const articleContent=
     "# h1 Heading 8-)\n" +
@@ -264,9 +269,14 @@ const styles = (theme) => ({
 class Article extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            isTOCCollapsed: true
-        }
+    }
+    componentDidMount() {
+        const {id} = this.props.match.params
+        const {dispatch} = this.props
+        dispatch(pullBlogById(id))
+    }
+    componentDidUpdate() {
+        tocbot.refresh()
     }
 
     render() {
@@ -282,7 +292,7 @@ class Article extends React.Component {
                                 <ArticleContentWrap date={date} content={content} title={title} tags={tags}/>
                             </Paper>
                         </Grid>
-                        <Grid item md={3} xl={3} lg={3} className={classes.hide} >
+                        <Grid item md={3} xl={3} lg={3}  >
                             <ArticleIndex contentClass={contentCSSClassName} contentStructure={"h1, h2, h3, h4"}/>
                         </Grid>
                     </Grid>
@@ -298,5 +308,16 @@ class Article extends React.Component {
         )
     }
 }
+function mapStateToProps(state) {
+    const blogDetail = state.blog_detail.content;
+    console.log(state)
+    return{
+        blog_id: blogDetail.id,
+        date: blogDetail.date,
+        title: blogDetail.title,
+        content: blogDetail.content,
+        tag: blogDetail.category,
+    }
+}
+export default withStyles(styles)(withRouter(connect(mapStateToProps)(Article)));
 
-export default withStyles(styles)(Article);

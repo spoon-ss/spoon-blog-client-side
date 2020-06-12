@@ -1,32 +1,64 @@
-import {templateURL} from '../assets/api'
+import {
+    queryBlogInfoByCategoryURL,
+    pullCategoryURL,
+    pullBlogURL
+} from '../assets/api'
 
 export const RECEIVE_BLOG_INFO_LIST = 'receive_blog_info_list'
 export const RECEIVE_CATEGORY_LIST = 'receive_category_list'
-export const RECEIVE_BLOG_CONTENT = 'receive_blog_content'
+export const RECEIVE_BLOG_DETAIL = 'receive_blog_detail'
 export const CHANGE_CURRENT_CATEGORY = 'change_current_category'
 export const CHANGE_CURRENT_PAGE = 'change_current_page'
+export const CHANGE_TOTAL_PAGE = 'change_total_page'
 
 
-export function changeChosenCategory(categoryId) {
+function changeChosenCategory(category) {
     return {
         type: CHANGE_CURRENT_CATEGORY,
         payload: {
-            category: categoryId
+            current_category: category
         }
     }
 }
 
-export function receiveBlogInfoList(blog) {
+function changeCurrentPage(page) {
+    return {
+        type: CHANGE_CURRENT_PAGE,
+        payload: {
+            current_page: page
+        }
+    }
+}
+
+function changeTotalPage(total_page) {
+    return {
+        type: CHANGE_TOTAL_PAGE,
+        payload: {
+            total_page: total_page
+        }
+    }
+}
+
+function receiveBlogInfoList(blog_list) {
     return {
         type: RECEIVE_BLOG_INFO_LIST,
         payload: {
-            blog: blog,
+            content: blog_list.map((item) => (
+                {
+                    id: item.id,
+                    title: item.title,
+                    date: item.date,
+                    introduction: item.introduction,
+                    introImgHref: item.intro_img_href,
+                    selfHref: item.self_href,
+                }
+            )),
             receiveDate: Date.now()
         }
     }
 }
 
-export function receiveCategoryList(category) {
+function receiveCategoryList(category) {
     return {
         type: RECEIVE_CATEGORY_LIST,
         payload: {
@@ -36,73 +68,59 @@ export function receiveCategoryList(category) {
     }
 }
 
-export function receiveBlogContent(content) {
+function receiveBlogDetail(blog) {
+    const content = blog.content
     return {
-        type: RECEIVE_BLOG_CONTENT,
+        type: RECEIVE_BLOG_DETAIL,
         payload: {
-            content: content,
-            receiveDate: Date.now(),
+            content: {
+                id: content.id,
+                title: content.title,
+                date: content.date,
+                content: content.content,
+                category: content.category,
+            },
+            metadata: blog.metadata,
+            receiveDate: Date.now()
         }
     }
 }
 
-export function changeCurrentPage(page) {
-    return {
-        type: CHANGE_CURRENT_PAGE,
-        payload: {
-            page: page
-        }
-    }
-}
 
 export function pullBlogInfoList(category, page) {
     return (dispatch) => {
-        fetch(templateURL(category, page))
+        dispatch(changeCurrentPage(page))
+        fetch(queryBlogInfoByCategoryURL(category, page))
             .then((response) => response.json())
-            .then(json => dispatch(receiveBlogInfoList(json.blog)))
+            .then(json => {
+                dispatch(receiveBlogInfoList(json.content))
+                dispatch(changeChosenCategory(category))
+                console.log(json)
+                dispatch(changeTotalPage(json.metadata.total_page))
+                dispatch(changeCurrentPage(json.metadata.current_page))
+            })
             .catch(error => console.error("Error:", error))
     }
 
-}
-
-export function pullBlogContentById(blogId) {
-    return (dispatch) => {
-        fetch(templateURL(blogId))
-            .then(response => response.json())
-            .then(json => dispatch(receiveBlogContent(json.content)))
-            .catch(error => console.error("Error:", error))
-    }
 }
 
 export function pullCategory() {
-    return (dispatch) => {
-        return fetch(templateURL("category"))
+    return (dispatch, getState) => {
+        return fetch(pullCategoryURL())
             .then(response => response.json())
-            .then(json => {
-                console.log(json);
-                return json;
-            })
             .then(json => dispatch(receiveCategoryList(json)))
             .catch(error => console.error("Error:", error))
     }
 }
 
-export function chooseCategory(category) {
-    return (dispatch, getState) => {
-        /*return fetch(templateURL(category, getState().ui.page))
-            .then((response) => response.json())
-            .then(json => dispatch(receiveBlogInfoList(json.blog)))
+export function pullBlogById(id) {
+    return (dispatch) => {
+        return fetch(pullBlogURL(id))
+            .then(response => response.json())
+            .then(json => dispatch(receiveBlogDetail(json)))
             .catch(error => console.error("Error:", error))
-            .then(dispatch(changeChosenCategory(category)))*/
-        dispatch(changeChosenCategory(category))
-    }
-
-}
-
-export function changePage(page) {
-    return (dispatch, getState) => {
-        dispatch(pullBlogInfoList(getState().ui.category, page))
-            .then(dispatch(changeCurrentPage(page)))
     }
 }
+
+
 

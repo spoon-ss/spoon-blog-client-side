@@ -1,9 +1,21 @@
-export const basicURL = 'http://localhost:3000'
+export const basicURL = `https://87d397d9-b2a5-40b5-bb5b-e6bb033cc99c.mock.pstmn.io`
 
-export const categoryURL = (category)=>{
-    return `${basicURL}/category/${category}`;
+export const queryBlogInfoByCategoryURL = (category, page)=>{
+
+
+    let result = basicURL + "/category"
+    result = result + `/${category.toLowerCase()}`
+
+    result += "/blog/?"
+    result += new URLSearchParams({page: page})
+    return result
 }
 
-export function templateURL (param){
-    return `https://87d397d9-b2a5-40b5-bb5b-e6bb033cc99c.mock.pstmn.io/${param}`;
+export const pullCategoryURL = ()=>{
+    return `${basicURL}/category`
 }
+
+export const pullBlogURL = (id) =>{
+    return `${basicURL}/blog/${id}`
+}
+
