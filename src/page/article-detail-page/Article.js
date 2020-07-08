@@ -6,7 +6,7 @@ import ArticleIndex from "./ArticleIndex";
 import {withStyles} from "@material-ui/core/styles";
 import ArticleRecommend from "./ArticleRecommend";
 import {pullBlogById} from "../../redux/actions";
-import connect from "react-redux/lib/connect/connect";
+import {connect} from "react-redux";
 import * as tocbot from 'tocbot'
 
 
@@ -310,7 +310,6 @@ class Article extends React.Component {
 }
 function mapStateToProps(state) {
     const blogDetail = state.blog_detail.content;
-    console.log(state)
     return{
         blog_id: blogDetail.id,
         date: blogDetail.date,

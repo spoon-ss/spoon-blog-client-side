@@ -1,11 +1,11 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Grid, Card} from '@material-ui/core'
-import ArticleCard from "./ArticleCard";
+import ArticleCard from "../../component/ArticleCard";
 import {withStyles} from "@material-ui/core/styles";
-import {pullBlogInfoList, pullCategory} from "../redux/actions";
-import CustomMenu from "./CustomMultiLevelMenu";
-import CustomPagination from "./CustomPagination";
+import {pullBlogInfoList, pullCategory} from "../../redux/actions";
+import CustomMenu from "../../component/CustomMultiLevelMenu";
+import CustomPagination from "../../component/CustomPagination";
 const chosenTag = "Label of Item"
 const categoryData =[
     {

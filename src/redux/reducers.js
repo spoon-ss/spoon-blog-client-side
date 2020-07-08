@@ -65,6 +65,7 @@ function changeBlogDetail(state={metadata: {}, content: {}}, action){
 }
 
 const appReducer = combineReducers({
+
     blog_info: changBlogInfo,
     blog_detail: changeBlogDetail
 })

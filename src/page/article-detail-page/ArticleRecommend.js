@@ -1,6 +1,6 @@
 import React from 'react'
 import {Card, Grid, Typography} from '@material-ui/core'
-import ArticleCard from "../ArticleCard";
+import ArticleCard from "../../component/ArticleCard";
 import {withStyles} from "@material-ui/core/styles";
 
 const styles = (theme) => ({

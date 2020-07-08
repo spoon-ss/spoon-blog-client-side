@@ -3,11 +3,10 @@ import './App.css';
 import 'fontsource-roboto';
 import Header from "./layout/header/Header";
 import Main from "./layout/Main"
-import Content from './articleComponent/Content'
+import Content from './page/article-overview-page/Content'
 import Footer from './layout/Footer'
 import {BrowserRouter, Route} from 'react-router-dom'
-import Article from "./articleComponent/articlePageContent/Article";
-import configureStore from "./redux/store";
+import Article from "./page/article-detail-page/Article";
 import {Provider} from 'react-redux'
 import CssBaseline from "@material-ui/core/CssBaseline";
 
@@ -24,7 +23,7 @@ function App({store}) {
                             <Content/>
                         </Route>
                         <Route path={"/blog/:id"}>
-                            <Article store={store}/>
+                            <Article/>
                         </Route>
                         {/*<FluidImage imgURL={`url(${backgroundImg})`}/>
             <Article content={articleContent}/> */}
