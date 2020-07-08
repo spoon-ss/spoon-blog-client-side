@@ -3,9 +3,14 @@ import {connect} from 'react-redux'
 import {Grid, Card} from '@material-ui/core'
 import ArticleCard from "../../component/ArticleCard";
 import {withStyles} from "@material-ui/core/styles";
-import {pullBlogInfoList, pullCategory} from "../../redux/actions";
 import CustomMenu from "../../component/CustomMultiLevelMenu";
 import CustomPagination from "../../component/CustomPagination";
+import {
+    blogInfoSelector, getBlogInfos, getChosenTag, getPage,
+    totalPageSelector,
+    unFlattenCategoryTreeSelector
+} from "../../redux/blog-overview-page/selector";
+import {BlogOverviewPageAction} from "../../redux/blog-overview-page/action";
 const chosenTag = "Label of Item"
 const categoryData =[
     {
@@ -69,20 +74,19 @@ class Content extends React.Component {
         if(chosenTag === newTag){
             return
         }
-        dispatch(pullBlogInfoList(newTag, 1))
+        dispatch(BlogOverviewPageAction.changeChosenCategory(newTag))
     }
     onPageChosen(newPage){
         const{dispatch, chosenPage, chosenTag} = this.props
         if(chosenPage === newPage){
             return
         }
-        dispatch(pullBlogInfoList(chosenTag, newPage))
+        dispatch(BlogOverviewPageAction.changeChosenPage(newPage))
     }
 
     componentDidMount() {
-        const {dispatch, chosenTag, chosenPage} = this.props
-        dispatch(pullCategory())
-        dispatch(pullBlogInfoList(chosenTag, chosenPage))
+        const {dispatch} = this.props
+        dispatch(BlogOverviewPageAction.loadPage())
     }
 
     render() {
@@ -102,13 +106,13 @@ class Content extends React.Component {
                         <Grid container spacing={2}>
                             {contentData.map((item, i) => (
                                 <Grid key={i} item xs={12} sm={6} md={4} lg={3}>
-                                    <ArticleCard imgURL={item.introImgHref} articleURL={item.selfHref}
+                                    <ArticleCard imgURL={item.introductionImgURL} articleURL={item.selfHref}
                                                  title={item.title} introduction={item.introduction}/>
                                 </Grid>
                             ))}
                         </Grid>
                         <Grid container justify={'center'}>
-                            <CustomPagination onPageChanged={this.onPageChosen} totalPage={totalPage} page={chosenPage}/>
+                            <CustomPagination onPageChanged={this.onPageChosen} totalPage={totalPage} page={chosenPage} />
                         </Grid>
                     </Grid>
                 </Grid>
@@ -119,12 +123,12 @@ class Content extends React.Component {
 function mapStateToProps(state) {
 
     return{
-        categoryData: state.blog_info.category.content,
-        contentData: state.blog_info.content,
+        categoryData: unFlattenCategoryTreeSelector(state),
+        contentData: blogInfoSelector(state),
         //get state from store
-        chosenTag: state.blog_info.metadata.current_category,
-        chosenPage: state.blog_info.metadata.current_page,
-        totalPage: state.blog_info.metadata.total_page
+        chosenTag: getChosenTag(state),
+        chosenPage: getPage(state),
+        totalPage: totalPageSelector(state)
     }
 
 }

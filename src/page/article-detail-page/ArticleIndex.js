@@ -24,7 +24,7 @@ class ArticleIndex extends React.Component{
 // Extra classes to add to links.
             extraLinkClasses: '',
 // Class to add to active links,
-// the link corresponding to the top most heading on the page.
+// the link corresponding to the top most heading on the blog-overview-page.
             activeLinkClass: 'is-active-link',
 // Main class to add to lists.
             listClass: 'toc-list',

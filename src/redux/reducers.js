@@ -6,6 +6,8 @@ import {
 } from './actions'
 
 import { combineReducers } from 'redux'
+import {blogDetailPageReducer} from "./blog-detail-page/reducer";
+import {blogOverviewPageReducer} from "./blog-overview-page/reducer";
 
 
 function changBlogInfo(state =
@@ -65,8 +67,7 @@ function changeBlogDetail(state={metadata: {}, content: {}}, action){
 }
 
 const appReducer = combineReducers({
-
-    blog_info: changBlogInfo,
-    blog_detail: changeBlogDetail
+    blogDetailPage: blogDetailPageReducer,
+    blogOverviewPage: blogOverviewPageReducer
 })
 export default appReducer

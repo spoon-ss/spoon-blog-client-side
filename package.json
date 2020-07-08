@@ -48,6 +48,8 @@
     "prop-types": "^15.7.2",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.2.0",
-    "reactstrap": "^8.4.1"
+    "reactstrap": "^8.4.1",
+    "reselect": "^4.0.0",
+    "un-flatten-tree": "^2.0.12"
   }
 }

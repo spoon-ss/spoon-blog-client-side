@@ -2,7 +2,7 @@ import {
     queryBlogInfoByCategoryURL,
     pullCategoryURL,
     pullBlogURL
-} from '../assets/api'
+} from '../assets/mock-api'
 
 export const RECEIVE_BLOG_INFO_LIST = 'receive_blog_info_list'
 export const RECEIVE_CATEGORY_LIST = 'receive_category_list'

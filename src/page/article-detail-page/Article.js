@@ -8,6 +8,7 @@ import ArticleRecommend from "./ArticleRecommend";
 import {pullBlogById} from "../../redux/actions";
 import {connect} from "react-redux";
 import * as tocbot from 'tocbot'
+import BlogDetailPageAction from "../../redux/blog-detail-page/action";
 
 
 
@@ -273,7 +274,7 @@ class Article extends React.Component {
     componentDidMount() {
         const {id} = this.props.match.params
         const {dispatch} = this.props
-        dispatch(pullBlogById(id))
+        dispatch(BlogDetailPageAction.pageLoad(id))
     }
     componentDidUpdate() {
         tocbot.refresh()

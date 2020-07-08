@@ -21,23 +21,22 @@ const styles = (theme) => ({
 const MenuItem = withStyles(styles)(withRouter(({content, isSubItem, history, chosenTag, onChosen, classes}) => {
     const [isToggle, setToggle] = useState(false);
     const onClick = ()=>{
-        onChosen(content.label);
-        history.push(content.to);
+        onChosen(content.id);
     }
     return (
         <div >
-            <ListItem button className={content.label === chosenTag ? classes.chosenBackground : ""}
-                      onClick={content.content ? () => (setToggle(!isToggle)) : onClick }>
+            <ListItem button className={content.id === chosenTag ? classes.chosenBackground : ""}
+                      onClick={content.content.length !== 0 ? () => (setToggle(!isToggle)) : onClick }>
                 <Typography className={classes.itemFontSize} color={isSubItem ? "textSecondary" : "textPrimary"} variant={"subtitle1"}>
                     {content.label}
                 </Typography>
-                {content.content ? (isToggle ? <ExpandLess/> : <ExpandMore/>) : ""}
+                {content.content.length !== 0 ? (isToggle ? <ExpandLess/> : <ExpandMore/>) : ""}
             </ListItem>
-            {content.content ?
+            {content.content.length !== 0 ?
                 <Collapse in={isToggle} timeout={"auto"} unmountOnExit>
                     <List className={classes.subMenuMargin}>
-                        {content.content.map((item) => {
-                            return (<MenuItem isSubItem={true} content={item} chosenTag={chosenTag} onChosen={onChosen}/>)
+                        {content.content.map((item, i) => {
+                            return (<MenuItem key={i} isSubItem={true} content={item} chosenTag={chosenTag} onChosen={onChosen}/>)
                         })}
                     </List>
                 </Collapse>
@@ -48,12 +47,11 @@ const MenuItem = withStyles(styles)(withRouter(({content, isSubItem, history, ch
 }))
 
 const CustomMenu = ({content, onTagChosen, chosenTag = undefined}) => {
-    const onChosen = (tag) =>{
-        onTagChosen(tag)
-    }
+
     return (
         <List>
-            {content.map((item) => (<MenuItem content={item} isSubItem={false} chosenTag={chosenTag} onChosen={onChosen}/>))}
+            <MenuItem content={{id: -1, label: "All", content:[]}} isSubItem={false} chosenTag={chosenTag} onChosen={onTagChosen}/>
+            {content.map((item, i) => (<MenuItem key={i} content={item} isSubItem={false} chosenTag={chosenTag} onChosen={onTagChosen}/>))}
         </List>
     )
 }
