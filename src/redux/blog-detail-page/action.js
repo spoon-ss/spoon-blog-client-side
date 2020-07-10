@@ -10,7 +10,7 @@ export default class BlogDetailPageAction{
     static RELATIVE_BLOG_LOAD_SUCCESS = "relative_blog_load_success"
     static RELATIVE_BLOG_LOAD_FAIL = 'relative_blog_load_fail'
 
-    static #pageLoadStart = () => {
+    static #pageDetailLoadStart = () => {
         return{
             type: BlogDetailPageAction.BLOG_DETAIL_LOAD
         }
@@ -20,7 +20,7 @@ export default class BlogDetailPageAction{
         return{
             type: BlogDetailPageAction.BLOG_DETAIL_LOAD_SUCCESS,
             payload:{
-                ...blogDetail
+                blogDetail: blogDetail
             }
         }
 
@@ -37,26 +37,22 @@ export default class BlogDetailPageAction{
     }
 
     static #pageDetailLoad = (pageId) =>{
-        const jsonParser = (json) =>({
-            id: json.blogInfo.id,
-            title: json.blogInfo.title,
-            introduction: json.blogInfo.introduction,
-            introductionImgURL: json.blogInfo.introductionImgURL,
-            categoryIds: json.blogInfo.categories,
-            content: json.content
-        })
+
         return async (dispatch) => {
-            dispatch(this.#pageLoadStart())
+            dispatch(this.#pageDetailLoadStart())
             return await fetch(fetchBlogDetailURL(pageId))
                 .then(res => res.json())
-                .then(json => dispatch(this.#pageDetailLoadSuccess(jsonParser(json))))
+                .then(json => {
+                    console.log(json);
+                    dispatch(this.#pageDetailLoadSuccess(json))
+                })
                 .catch(err => dispatch(this.#pageDetailLoadFail(err.message)))
         }
     }
 
     static #relativeBlogLoad = (pageId) => {
         return async (dispatch) =>{
-            dispatch(this.#relativeBlogLoad())
+            dispatch(this.#relativeBlogLoadStart())
             return await fetch(fetchRelativeBlogInfosURL(pageId))
                 .then(res => res.json())
                 .then(json => {
@@ -99,7 +95,7 @@ export default class BlogDetailPageAction{
     static pageLoad(pageId){
         return async(dispatch) => {
             dispatch(this.#pageDetailLoad(pageId))
-            dispatch(this.#relativeBlogLoad(pageId))
+            //dispatch(this.#relativeBlogLoad(pageId))
         }
     }
 }

@@ -1,5 +1,6 @@
 import BlogDetailPageAction from "./action";
 import {combineReducers} from "redux";
+import {blogInfoSelector} from "../blog-overview-page/selector";
 
 const initialState = {
     definiteState: {
@@ -10,15 +11,20 @@ const initialState = {
         relativeBlogInfoLoadSuccess: null,
         relativeBlogInfoLoadMessage: null,
     },
-    blogDetail:{
-        id: null,
-        title: null,
-        introduction: null,
-        introductionImgLink: null,
-        content: null,
-        categoryIds: []
+    blogDetail: {
+        blogInfo: {
+            id: null,
+            title: null,
+            introduction: null,
+            introductionImgURL: null,
+            publishDate: null,
+            modifiedDate: null,
+            categories: [],
+            images: []
+        },
+        blogContent: null
     },
-    relativeBlogInfo:[]
+    relativeBlogInfo: [],
 }
 
 function definiteStateReducer(state = initialState.definiteState, action) {
@@ -42,7 +48,7 @@ function definiteStateReducer(state = initialState.definiteState, action) {
                 ...state,
                 detailLoading: false,
                 detailLoadSuccess: false,
-                detailLoadMessage: action.paylaod.message
+                detailLoadMessage: action.payload.message
             }
         case(BlogDetailPageAction.RELATIVE_BLOG_LOAD):
             return{
@@ -71,10 +77,12 @@ function definiteStateReducer(state = initialState.definiteState, action) {
 }
 function blogDetailReducer(state = initialState.blogDetail, action) {
     const payload = action.payload
+    console.log("blog detail reducer")
+    console.log(payload)
     switch (action.type) {
-        case (BlogDetailPageAction.RELATIVE_BLOG_LOAD_SUCCESS):
+        case (BlogDetailPageAction.BLOG_DETAIL_LOAD_SUCCESS):
             return{
-                ...payload
+                ...payload.blogDetail
             }
         default:
             return state
@@ -85,10 +93,8 @@ function blogDetailReducer(state = initialState.blogDetail, action) {
 function relativeBlogInfoReducer(state = initialState.relativeBlogInfo, action){
     const payload = action.payload
     switch (action.type) {
-        case(BlogDetailPageAction.BLOG_DETAIL_LOAD_SUCCESS):
-            return{
-                ...payload
-            }
+        case(BlogDetailPageAction.RELATIVE_BLOG_LOAD_SUCCESS):
+            return [...payload.blogInfos]
         default:
             return state
     }

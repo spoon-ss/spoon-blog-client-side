@@ -62,6 +62,9 @@ const styles = (theme) => ({
     }
 })
 
+const getArticleURL = (id)=>{
+    return `/blog/${id}`
+}
 class Content extends React.Component {
     constructor(props) {
         super(props);
@@ -106,7 +109,7 @@ class Content extends React.Component {
                         <Grid container spacing={2}>
                             {contentData.map((item, i) => (
                                 <Grid key={i} item xs={12} sm={6} md={4} lg={3}>
-                                    <ArticleCard imgURL={item.introductionImgURL} articleURL={item.selfHref}
+                                    <ArticleCard imgURL={item.introductionImgURL} articleURL={getArticleURL(item.id)}
                                                  title={item.title} introduction={item.introduction}/>
                                 </Grid>
                             ))}

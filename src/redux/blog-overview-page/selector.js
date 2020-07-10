@@ -19,7 +19,8 @@ export const getBlogInfos = state => state.blogOverviewPage.blogInfo
 export const totalPageSelector = createSelector(
     [getBlogInfos],
     (blogInfo) =>{
-        return Math.ceil(blogInfo.length / 8)
+        let totalPage = Math.ceil(blogInfo.length / 8)
+        return totalPage === 0 ? 1 : totalPage;
     }
 )
 

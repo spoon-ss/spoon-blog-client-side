@@ -1,6 +1,6 @@
 const baseURL = "http://localhost:8080"
 export function fetchBlogDetailURL(id){
-    return `${baseURL}/${id}`
+    return `${baseURL}/blog/${id}`
 }
 
 export function fetchRelativeBlogInfosURL(id){

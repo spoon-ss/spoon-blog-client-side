@@ -9,6 +9,7 @@ import {pullBlogById} from "../../redux/actions";
 import {connect} from "react-redux";
 import * as tocbot from 'tocbot'
 import BlogDetailPageAction from "../../redux/blog-detail-page/action";
+import {getBlogContent, getBlogId, getBlogIntroduction, getBlogTitle} from "../../redux/blog-detail-page/selector";
 
 
 
@@ -282,7 +283,7 @@ class Article extends React.Component {
 
     render() {
         const {classes} = this.props
-        const {date, content=articleContent, title, tags} = this.props
+        const {date, content="", title, tags} = this.props
 
         return (
             <Grid container justify={"center"} className={classes.root}>
@@ -310,13 +311,12 @@ class Article extends React.Component {
     }
 }
 function mapStateToProps(state) {
-    const blogDetail = state.blog_detail.content;
+    console.log(state)
     return{
-        blog_id: blogDetail.id,
-        date: blogDetail.date,
-        title: blogDetail.title,
-        content: blogDetail.content,
-        tag: blogDetail.category,
+        blog_id: getBlogId(state),
+        title: getBlogTitle(state),
+        content: getBlogContent(state),
+        introduction: getBlogIntroduction(state)
     }
 }
 export default withStyles(styles)(withRouter(connect(mapStateToProps)(Article)));
