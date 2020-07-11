@@ -9,7 +9,13 @@ import {pullBlogById} from "../../redux/actions";
 import {connect} from "react-redux";
 import * as tocbot from 'tocbot'
 import BlogDetailPageAction from "../../redux/blog-detail-page/action";
-import {getBlogContent, getBlogId, getBlogIntroduction, getBlogTitle} from "../../redux/blog-detail-page/selector";
+import {
+    getBlogContent,
+    getBlogId,
+    getBlogIntroduction,
+    getBlogTitle,
+    getRelatedBlogInfo
+} from "../../redux/blog-detail-page/selector";
 
 
 
@@ -284,6 +290,7 @@ class Article extends React.Component {
     render() {
         const {classes} = this.props
         const {date, content="", title, tags} = this.props
+        const {relatedBlogInfo} = this.props
 
         return (
             <Grid container justify={"center"} className={classes.root}>
@@ -301,7 +308,7 @@ class Article extends React.Component {
                     <Grid container>
                         <Grid item xs={12} sm={12} md={9} xl={9} lg={9} >
                             <Paper elevation={4} className={classes.recommend}>
-                                <ArticleRecommend/>
+                                <ArticleRecommend content={relatedBlogInfo}/>
                             </Paper>
                         </Grid>
                     </Grid>
@@ -311,12 +318,14 @@ class Article extends React.Component {
     }
 }
 function mapStateToProps(state) {
+    console.log("log state")
     console.log(state)
     return{
         blog_id: getBlogId(state),
         title: getBlogTitle(state),
         content: getBlogContent(state),
-        introduction: getBlogIntroduction(state)
+        introduction: getBlogIntroduction(state),
+        relatedBlogInfo: getRelatedBlogInfo(state),
     }
 }
 export default withStyles(styles)(withRouter(connect(mapStateToProps)(Article)));

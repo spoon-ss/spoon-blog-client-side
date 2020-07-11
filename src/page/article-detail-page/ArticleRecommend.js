@@ -19,16 +19,18 @@ const styles = (theme) => ({
 class ArticleRecommend extends React.Component {
     render() {
         const {classes} = this.props
+        const {content} = this.props
         return (
             <div>
                     <Typography className={classes.header} variant={'overline'} component={'h5'}>
                         Also on <b>Spoon' Blog</b>
                     </Typography>
                     <Grid container wrap={"nowrap"} className={classes.root} spacing={2}>
-                        {[...Array(8)].map((item, i) => (
+                        {content.map((item, i) => (
                             <Grid item key={i}>
-                                    <ArticleCard className={classes.flexItem} title={"Introduction to Spring MVC"}
-                                                 introduction={"Test content Test content Test content Test content Test content Test content "}/>
+                                    <ArticleCard className={classes.flexItem} title={item.title}
+                                                 introduction={item.introduction}
+                                                 imgURL={item.introductionImgURL} articleURL={`/blog/${item.id}`}/>
                             </Grid>
                         ))}
                     </Grid>

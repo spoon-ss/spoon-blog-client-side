@@ -6,9 +6,9 @@ export default class BlogDetailPageAction{
     static BLOG_DETAIL_LOAD_SUCCESS = "blog_detail_load_success"
     static BLOG_DETAIL_LOAD_FAIL = "blog_detail_load_fail"
 
-    static RELATIVE_BLOG_LOAD = "relative_blog_load"
-    static RELATIVE_BLOG_LOAD_SUCCESS = "relative_blog_load_success"
-    static RELATIVE_BLOG_LOAD_FAIL = 'relative_blog_load_fail'
+    static RELATED_BLOG_LOAD = "related_blog_load"
+    static RELATED_BLOG_LOAD_SUCCESS = "related_blog_load_success"
+    static RELATED_BLOG_LOAD_FAIL = 'related_blog_load_fail'
 
     static #pageDetailLoadStart = () => {
         return{
@@ -50,31 +50,31 @@ export default class BlogDetailPageAction{
         }
     }
 
-    static #relativeBlogLoad = (pageId) => {
+    static #relatedBlogLoad = (pageId) => {
         return async (dispatch) =>{
-            dispatch(this.#relativeBlogLoadStart())
+            dispatch(this.#relatedBlogLoadStart())
             return await fetch(fetchRelativeBlogInfosURL(pageId))
                 .then(res => res.json())
                 .then(json => {
                     if(json.error){
                         throw new Error(json.message)
                     }else{
-                        dispatch(this.#relativeBlogLoadSuccess(json))
+                        dispatch(this.#relatedBlogLoadSuccess(json))
                     }
                 })
-                .catch(error => dispatch(this.#relativeBlogLoadFail()))
+                .catch(error => dispatch(this.#relatedBlogLoadFail()))
         }
     }
 
-    static #relativeBlogLoadStart = () =>{
+    static #relatedBlogLoadStart = () =>{
         return {
-            type: this.RELATIVE_BLOG_LOAD
+            type: this.RELATED_BLOG_LOAD
         }
     }
 
-    static #relativeBlogLoadSuccess = (blogInfos) => {
+    static #relatedBlogLoadSuccess = (blogInfos) => {
         return{
-            type: this.RELATIVE_BLOG_LOAD_SUCCESS,
+            type: this.RELATED_BLOG_LOAD_SUCCESS,
             payload: {
                 blogInfos: [...blogInfos]
             }
@@ -82,9 +82,9 @@ export default class BlogDetailPageAction{
 
     }
 
-    static #relativeBlogLoadFail = (message) =>{
+    static #relatedBlogLoadFail = (message) =>{
         return{
-            type: this.RELATIVE_BLOG_LOAD_FAIL,
+            type: this.RELATED_BLOG_LOAD_FAIL,
             payload:{
                 message: message
             }
@@ -95,7 +95,7 @@ export default class BlogDetailPageAction{
     static pageLoad(pageId){
         return async(dispatch) => {
             dispatch(this.#pageDetailLoad(pageId))
-            //dispatch(this.#relativeBlogLoad(pageId))
+            dispatch(this.#relatedBlogLoad(pageId))
         }
     }
 }

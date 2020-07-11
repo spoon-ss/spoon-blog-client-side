@@ -16,7 +16,7 @@ function App({store}) {
         <div className="App">
             <Provider store={store}>
                 <CssBaseline/>
-                <BrowserRouter>
+                <BrowserRouter forceRefresh={true}>
                     <Header/>
                     <Main>
                         <Route exact path={"/"}>

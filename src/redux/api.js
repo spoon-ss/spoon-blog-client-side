@@ -4,7 +4,7 @@ export function fetchBlogDetailURL(id){
 }
 
 export function fetchRelativeBlogInfosURL(id){
-    return `${baseURL}/same-blog/${id}`
+    return `${baseURL}/blog/${id}/related-blog`
 }
 
 export function fetchCategoryURL(){

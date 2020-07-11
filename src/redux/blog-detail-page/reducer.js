@@ -1,6 +1,5 @@
 import BlogDetailPageAction from "./action";
 import {combineReducers} from "redux";
-import {blogInfoSelector} from "../blog-overview-page/selector";
 
 const initialState = {
     definiteState: {
@@ -24,7 +23,7 @@ const initialState = {
         },
         blogContent: null
     },
-    relativeBlogInfo: [],
+    relatedBlogInfo: [],
 }
 
 function definiteStateReducer(state = initialState.definiteState, action) {
@@ -50,21 +49,21 @@ function definiteStateReducer(state = initialState.definiteState, action) {
                 detailLoadSuccess: false,
                 detailLoadMessage: action.payload.message
             }
-        case(BlogDetailPageAction.RELATIVE_BLOG_LOAD):
+        case(BlogDetailPageAction.RELATED_BLOG_LOAD):
             return{
                 ...state,
                 relativeBlogInfoLoading: true,
                 relativeBlogInfoLoadSuccess: null,
                 relativeBlogInfoLoadMessage: null
             }
-        case(BlogDetailPageAction.RELATIVE_BLOG_LOAD_SUCCESS):
+        case(BlogDetailPageAction.RELATED_BLOG_LOAD_SUCCESS):
             return{
                 ...state,
                 relativeBlogInfoLoading: false,
                 relativeBlogInfoLoadSuccess: true,
                 relativeBlogInfoLoadMessage: null
             }
-        case(BlogDetailPageAction.RELATIVE_BLOG_LOAD_FAIL):
+        case(BlogDetailPageAction.RELATED_BLOG_LOAD_FAIL):
             return{
                 ...state,
                 relativeBlogInfoLoading: false,
@@ -90,10 +89,12 @@ function blogDetailReducer(state = initialState.blogDetail, action) {
 
 }
 
-function relativeBlogInfoReducer(state = initialState.relativeBlogInfo, action){
+function relatedBlogInfoReducer(state = initialState.relatedBlogInfo, action){
     const payload = action.payload
+    console.log("relatedBlogInfoReducers called")
+    console.log(payload)
     switch (action.type) {
-        case(BlogDetailPageAction.RELATIVE_BLOG_LOAD_SUCCESS):
+        case(BlogDetailPageAction.RELATED_BLOG_LOAD_SUCCESS):
             return [...payload.blogInfos]
         default:
             return state
@@ -102,5 +103,5 @@ function relativeBlogInfoReducer(state = initialState.relativeBlogInfo, action){
 export const blogDetailPageReducer = combineReducers({
     definiteState: definiteStateReducer,
     blogDetail: blogDetailReducer,
-    relativeBlogInfo: relativeBlogInfoReducer,
+    relatedBlogInfo: relatedBlogInfoReducer,
 })

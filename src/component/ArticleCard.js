@@ -34,38 +34,38 @@ const styles = (theme) => ({
 
 })
 
-function ArticleCard(props) {
-    const {classes} = props;
-    const {title, introduction, imgURL=`${cardImg}`, articleURL='/blog/1'} = props;
-    const {history} = props
-
-    return (
-        <div className={props.className}>
+class ArticleCard extends React.Component{
+    render() {
+        const {classes} = this.props;
+        const {title, introduction, imgURL=`${cardImg}`, articleURL='/blog/1'} = this.props;
+        const {history} = this.props
+        return (
+            <div className={this.props.className}>
 
                 <Card className={classes.root}>
-                        <CardMedia
-                            className={classes.media}
-                            image={`${imgURL}`}
-                        />
-                        <CardContent className={classes.cardContent}>
-                            <Typography className={classes.title} gutterBottom variant="h2" component="h2">
-                                {title}
-                            </Typography>
-                            <Typography className={classes.introduction} variant="body2" color="textSecondary" component="p">
-                                {introduction}
-                            </Typography>
-                        </CardContent>
+                    <CardMedia
+                        className={classes.media}
+                        image={`${imgURL}`}
+                    />
+                    <CardContent className={classes.cardContent}>
+                        <Typography className={classes.title} gutterBottom variant="h2" component="h2">
+                            {title}
+                        </Typography>
+                        <Typography className={classes.introduction} variant="body2" color="textSecondary" component="p">
+                            {introduction}
+                        </Typography>
+                    </CardContent>
                     <CardActions>
                         <Button style={{textTransform: 'none'}} size="small" color="primary" onClick={(e)=>{
-                            e.preventDefault();
                             history.push(articleURL);
                         }}>
                             Read More
                         </Button>
                     </CardActions>
                 </Card>
-        </div>
-    );
+            </div>
+        )
+    }
 
 }
 
