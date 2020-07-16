@@ -1,22 +1,23 @@
 import React, {useState} from 'react'
 import Pagination from "@material-ui/lab/Pagination"
-import {withStyles} from "@material-ui/core/styles";
-const styles = (theme) =>({
+import {withStyles, makeStyles} from "@material-ui/core/styles";
+const useStyle = makeStyles((theme) =>({
     root:{
-        justify: 'center'
+        marginTop: theme.spacing(4),
     }
-})
-const CustomPagination = function ({page, totalPage, onPageChanged, classes}) {
+}))
+const CustomPagination = function ({page, totalPage, onPageChanged}) {
 
     const onChange = (event, value)=>{
         event.preventDefault()
         onPageChanged(value)
     }
+    const classes = useStyle()
     return(
-        <div>
+        <div className={classes.root}>
             <Pagination className={classes.root} color={"primary"} count={totalPage} page={page} onChange={onChange}/>
         </div>
     )
 
 }
-export default withStyles(styles)(CustomPagination)
+export default CustomPagination

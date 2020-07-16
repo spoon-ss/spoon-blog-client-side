@@ -19,7 +19,7 @@ const styles = (theme) => ({
     },
     media: {
         minHeight: '150px',
-        backgroundSize: '100%',
+        backgroundSize: 'cover'
     },
     title:{
         fontSize: '1rem'
@@ -40,7 +40,6 @@ class ArticleCard extends React.Component{
         const {title, introduction, imgURL=`${cardImg}`, articleURL='/blog/1'} = this.props;
         const {history} = this.props
         return (
-            <div className={this.props.className}>
 
                 <Card className={classes.root}>
                     <CardMedia
@@ -63,7 +62,6 @@ class ArticleCard extends React.Component{
                         </Button>
                     </CardActions>
                 </Card>
-            </div>
         )
     }
 

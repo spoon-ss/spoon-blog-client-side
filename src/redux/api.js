@@ -18,3 +18,6 @@ export function fetchBlogInfosByCategoryURL(categoryId){
     return `${baseURL}/category/${categoryId}/blog`
 }
 
+export function fetchAllBlogInfo(){
+    return fetch(`${baseURL}/blog`)
+}

@@ -94,7 +94,7 @@ class Header extends React.Component {
                             <CategoryIcon className={classes.icon} color="action"/>
                             <Typography variant={'button'}>Category</Typography>
                         </Button>
-                        <Button color={'inherit'} className={classes.button}>
+                        <Button color={'inherit'} onClick={() =>(history.push("/archive"))} className={classes.button}>
                             <ArchiveIcon className={classes.icon} color="action"/>
                             <Typography variant={'button'}>Archive</Typography>
                         </Button>
@@ -116,3 +116,4 @@ class Header extends React.Component {
 }
 
 export default withStyles(styles)(withRouter(Header));
+

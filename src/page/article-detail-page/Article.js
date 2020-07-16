@@ -1,11 +1,10 @@
 import React from 'react'
 import { withRouter } from "react-router-dom";
-import {Grid, Paper} from "@material-ui/core";
+import {Grid, Paper, Typography} from "@material-ui/core";
 import {ArticleContentWrap, contentCSSClassName} from "./ArticleContent";
 import ArticleIndex from "./ArticleIndex";
 import {withStyles} from "@material-ui/core/styles";
 import ArticleRecommend from "./ArticleRecommend";
-import {pullBlogById} from "../../redux/actions";
 import {connect} from "react-redux";
 import * as tocbot from 'tocbot'
 import BlogDetailPageAction from "../../redux/blog-detail-page/action";
@@ -289,16 +288,17 @@ class Article extends React.Component {
 
     render() {
         const {classes} = this.props
-        const {date, content="", title, tags} = this.props
+        const {date, introduction = "", content="", title, tags} = this.props
         const {relatedBlogInfo} = this.props
 
         return (
             <Grid container justify={"center"} className={classes.root}>
                 <Grid item xs={12} sm={12} md={10} lg={11} xl={11}>
                     <Grid container>
+
                         <Grid item xs={12} sm={12} md={9} xl={9} lg={9}>
                             <Paper elevation={4}>
-                                <ArticleContentWrap date={date} content={content} title={title} tags={tags}/>
+                                <ArticleContentWrap date={date} introduction={introduction} content={content} title={title} tags={tags}/>
                             </Paper>
                         </Grid>
                         <Grid item md={3} xl={3} lg={3}  >

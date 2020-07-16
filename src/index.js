@@ -10,6 +10,7 @@ import configureStore from "./redux/store";
 const store = configureStore()
 ReactDOM.render(
   <React.StrictMode>
+
       <App store={store}/>
   </React.StrictMode>,
   document.getElementById('root')

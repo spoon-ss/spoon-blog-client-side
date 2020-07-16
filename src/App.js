@@ -9,6 +9,7 @@ import {BrowserRouter, Route} from 'react-router-dom'
 import Article from "./page/article-detail-page/Article";
 import {Provider} from 'react-redux'
 import CssBaseline from "@material-ui/core/CssBaseline";
+import Archive from "./page/archive-page/Archive";
 
 
 function App({store}) {
@@ -24,6 +25,9 @@ function App({store}) {
                         </Route>
                         <Route path={"/blog/:id"}>
                             <Article/>
+                        </Route>
+                        <Route exact path={"/archive"}>
+                            <Archive/>
                         </Route>
                         {/*<FluidImage imgURL={`url(${backgroundImg})`}/>
             <Article content={articleContent}/> */}
