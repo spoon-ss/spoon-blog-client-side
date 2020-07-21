@@ -11,6 +11,7 @@ import SkipNextIcon from '@material-ui/icons/SkipNext';
 import cardImg from "../assets/img/cardImg.jpg";
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,8 +24,8 @@ const useStyles = makeStyles((theme) => ({
     content: {
         flex: '1 0 auto',
     },
-    cover: {
-        width: 151,
+    cover:{
+        height: "100%",
     },
     controls: {
         display: 'flex',
@@ -32,10 +33,7 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: theme.spacing(1),
         paddingBottom: theme.spacing(1),
     },
-    playIcon: {
-        height: 38,
-        width: 38,
-    },
+
 }));
 
 export default function BlogHorizontalCard({title, introduction, imgURL, articleURL="/blog/1"}) {
@@ -44,25 +42,31 @@ export default function BlogHorizontalCard({title, introduction, imgURL, article
 
     return (
         <Card className={classes.root}>
-            <div className={classes.details}>
-                <CardContent className={classes.content}>
-                    <Typography component="h5" variant="h5">
-                        {title}
-                    </Typography>
-                    <Typography variant="subtitle1" color="textSecondary">
-                        {introduction}
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                    <Button style={{textTransform: 'none'}} size="small" color="primary" href={articleURL}>
-                        Read More
-                    </Button>
-                </CardActions>
-            </div>
-            <CardMedia
-                className={classes.cover}
-                image={imgURL}
-            />
+            <Grid container justify={"space-around"} >
+                <Grid item xs={6}>
+                    <div className={classes.details}>
+                        <CardContent className={classes.content}>
+                            <Typography component="h5" variant="h5">
+                                {title}
+                            </Typography>
+                            <Typography variant="subtitle1" color="textSecondary">
+                                {introduction}
+                            </Typography>
+                        </CardContent>
+                        <CardActions>
+                            <Button style={{textTransform: 'none'}} size="small" color="primary" href={articleURL}>
+                                Read More
+                            </Button>
+                        </CardActions>
+                    </div>
+                </Grid>
+                <Grid item xs={5}>
+                    <CardMedia
+                        className={classes.cover}
+                        image={imgURL}
+                    />
+                </Grid>
+            </Grid>
         </Card>
     );
 }

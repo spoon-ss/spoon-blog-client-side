@@ -53,7 +53,7 @@ class SearchBox extends React.Component {
     }
 
     render() {
-        const {open, onClose, blogInfo = testData} = this.props
+        const {keyword, open, onClose, blogInfo = testData} = this.props
         const {classes} = this.props
 
         return (
@@ -71,11 +71,13 @@ class SearchBox extends React.Component {
                             <TextField
                                 autoFocus
                                 variant={"outlined"}
+                                value={keyword}
                                 color={"primary"}
                                 margin="dense"
                                 id="name"
                                 label="Keyword"
                                 fullWidth
+
                                 onChange={this.onKeywordChange}
                             />
                         </div>
@@ -86,7 +88,10 @@ class SearchBox extends React.Component {
                                     <Grid key={i} item xs={12} >
                                         <BlogHorizontalCard
                                             title={item.title}
-                                            introduction={item.introduction}/>
+                                            introduction={item.introduction}
+                                            articleURL={`blog/${item.id}`}
+                                            imgURL={item.introductionImgURL}
+                                        />
                                     </Grid>
                                 ))}
                             </Grid>

@@ -54,7 +54,7 @@ function contentReducer (state = initialState.content, action) {
             return {...state, keyword: payload.keyword}
         }
         case SearchBoxAction.SEARCH_BOX_EXIT:{
-            return initialState.content
+            return {...initialState.content}
         }
         default: {
             return state
