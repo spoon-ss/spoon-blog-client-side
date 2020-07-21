@@ -10,6 +10,7 @@ import ArchiveIcon from '@material-ui/icons/Archive';
 import PersonIcon from '@material-ui/icons/Person';
 import SearchIcon from '@material-ui/icons/Search';
 import {withRouter, Link} from "react-router-dom";
+import SearchBox from "../../page/search-box/SearchBox";
 
 const styles = theme => ({
     toolbarHeight:{
@@ -66,11 +67,25 @@ const styles = theme => ({
 class Header extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            searchBoxOpen: false
+        }
+        this.handleSearchBoxOpen = this.handleSearchBoxOpen.bind(this)
+        this.handleSearchBoxClose = this.handleSearchBoxClose.bind(this)
     }
 
+
+    handleSearchBoxOpen(){
+        this.setState({searchBoxOpen: true})
+    }
+    handleSearchBoxClose(){
+        this.setState({searchBoxOpen: false})
+    }
+
+
     render() {
-        const {classes} = this.props
-        const {history} = this.props
+        const {classes, history} = this.props
+        const {searchBoxOpen} = this.state
 
         return (
 
@@ -102,11 +117,14 @@ class Header extends React.Component {
                             <PersonIcon className={classes.icon} color="action"/>
                             <Typography variant={'button'}>About me</Typography>
                         </Button>
-                        <Button color={'inherit'} className={classes.button}>
+                        <Button color={'inherit'} className={classes.button}  onClick={this.handleSearchBoxOpen} >
                             <SearchIcon/>
                         </Button>
                         <div className={classes.hideButton}>
                             <CustomizedMenus />
+                        </div>
+                        <div>
+                            <SearchBox open={searchBoxOpen} onClose={this.handleSearchBoxClose}/>
                         </div>
                 </AppBar>
             </div>

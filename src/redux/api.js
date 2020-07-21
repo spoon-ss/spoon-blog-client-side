@@ -21,3 +21,9 @@ export function fetchBlogInfosByCategoryURL(categoryId){
 export function fetchAllBlogInfo(){
     return fetch(`${baseURL}/blog`)
 }
+
+export function fetchSearchResult(keyword){
+    let url = new URL(`${baseURL}/blog/search`)
+    url.searchParams.append("keyword", keyword)
+    return fetch(url.toString())
+}
