@@ -56,7 +56,6 @@ export default class SearchBoxAction{
         return (dispatch) =>{
             dispatch(this.#searchBoxKeywordChange(newKeyword))
             return dispatch(this.#searchBoxFetchResult(newKeyword))
-                .then(() => dispatch(this.#searchBoxKeywordChange(newKeyword)))
         }
     }
 

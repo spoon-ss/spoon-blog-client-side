@@ -29,13 +29,10 @@ export const blogInfoSelector = createSelector(
     [getPage, getBlogInfos],
     (page, blogInfo) => {
         // calculate page
-        console.log("select blog info")
-        console.log(blogInfo)
-        console.log(page)
-        const blogs = blogInfo.filter((item, i) =>
-            (i >= (page - 1) * 8 && i < page * 8  ))
+        const blogs = blogInfo
+            .filter((item, i) => (i >= (page - 1) * 8 && i < page * 8  ))
+            .sort( (b1, b2) => b2.publishDate.localeCompare(b1.publishDate))
         // select data field to show
-        console.log(blogs)
         return blogs.map((item) => ({
             id: item.id,
             title: item.title,
